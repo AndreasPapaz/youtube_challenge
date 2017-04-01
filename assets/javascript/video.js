@@ -1,4 +1,3 @@
-//Author: Matthew Sells
 //YouTube Data API key  AIzaSyApk9cJ6LxO_taHUxiG8kftlhs1ilr7LpQ
 
 //Base query URL: https://www.googleapis.com/youtube/v3/search?
