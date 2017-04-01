@@ -1,2 +1,12 @@
-# youtube_challenge
-Group work using YouTube api, Firebase, and Facebook login api
+# YouTube-challenge
+
+-YouTube API
+-Facebook login php api
+-Firebase 
+
+-html
+-css
+-bootstrap
+-javascript
+-jquery
+-math.js

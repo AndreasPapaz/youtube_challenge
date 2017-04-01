@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Gladiators</title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+	<script src='https://www.youtube.com/iframe_api'></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.10.1/math.min.js'></script>
+
+</head>
+<body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1159955214127114',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.8'
+    });  
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  function fblogin(){
+    FB.getLoginStatus(function(response){
+        if (response.status == "connected"){
+            getUserProfile();
+        }else{
+            FB.login();
+            fblogin();
+        }
+    });
+    function getUserProfile(){
+        FB.api('/me?fields=id,name', function(response){
+            username =response.name;
+            img_url = "http://graph.facebook.com/" + response.id + "/picture?type=large";
+            enterGame();
+        })
+    }
+    };
+</script>
+
+<div class="container-fluid">
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+			<div class='modal-header'>
+				<p class="text-center">END GAME</p>
+			</div>
+			
+			<div class="modal-body">	
+				<div class="text-center"><span class="endWins1"></span></div>
+			</div>
+
+			<div class='modal-footer'><div class="text-center"><div class="btn btn-primary" id="restartRefresh" onClick="window.location.reload()">RESTART</div></div></div>
+			</div>
+		</div>
+
+<!-- This is the page before any user action -->
+
+	<video autoplay loop>
+  		<source src="assets/images/giphy.mp4" type="video/mp4">
+  		<source src="assets/images/giphy.ogg" type="video/ogg">
+  		Your browser does not support the video tag.
+	</video>
+	
+	<div class="jumbotron text-center">
+  		<h1>Video Gladiators</h1>
+  		<p>Challenge friend or foe to a viral video game of skill and speed</p> 
+	</div>
+
+	<div class="top text-center">
+
+		<div id="login-switch">
+			<fb:login-button data-max-rows="1" data-size="xlarge" scope="public_profile,email" onlogin="fblogin();"></fb:login-button>
+        </div>
+
+        <!-- this is out old login switch -->
+        <!-- <div id="login-switch">
+			<input id="userName" placeholder="User Name"/>
+		</div>
+
+		<button id="start-button">Enter the arena</button> -->
+
+<!-- This is the page after player 1 clicks "enter the arena" -->
+
+		<div class="welcome">
+			<div class="youArePlayer"></div>
+			<h3 data-text="Waiting for player 2 ...">Waiting for player 2 ...</h3>
+		</div>
+
+	</div>
+
+<!-- Parts of the "main" page will display once player 2 joins the game -->
+
+	<div class="main text-center">
+
+		<div id="timer"></div>
+
+		<div id="question">
+		</div>
+
+		<img id="video-placeholder" src="assets/images/question-mark.png">
+
+		<!-- <div id="player text-center"><img id="video-player" src="http://placehold.it/560x315"></div> -->
+		<div class="video-container">
+			<div id="player"></div>
+		</div>
+
+		<div id="gameTimer"></div>
+
+		<div class="row text-center">
+
+
+			<div class="player1 col-xs-4">
+				<div>
+					<img class="img-fluid img-circle" id="player1-image" src="assets/images/player1.png" alt="player one">
+				</div>
+				<p>
+					<span id="player1-name"></span>
+				</p>
+				<div class="score">
+					<div class="col-md-12"> 
+						<span id="player1-wins">Wins: </span>
+						<span id="player1-losses">Losses: </span>
+					</div>
+				</div>
+			</div>
+
+<!-- 		This "answerPlaceholder" div holds page layout before we show answers -->
+
+			<div class="answerPlaceholder col-xs-4"></div>
+
+			<div class="answer col-xs-4">
+				<button id="answer1" class='answer'></button>
+				<button id="answer2" class='answer'></button>
+				<button id="answer3" class='answer'></button>
+				<button id="answer4" class='answer'></button>
+			</div>
+
+			<div class="player2 col-xs-4">
+				<div>
+					<img class="img-fluid img-circle" id="player2-image" src="assets/images/player2.png" alt="player two">
+				</div>
+				<p>
+					<span id="player2-name"></span>
+				</p>
+				<div class="score">
+					<div class="col-md-12">
+						<span id="player2-wins">Wins: </span>
+						<span id="player2-losses">Losses: </span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Testing chat feature -->
+		<div id="chat">
+        	<div id="chat-messages"></div>
+        		<div id="chat-bar">
+          			<input id="chat-input" placeholder="Message your opponent"/>
+          			<button id="chat-send">Send</button>
+        	</div>
+        </div>
+        <!-- End of test -->
+	</div>
+
+</div>
+
+<script src="assets/javascript/video.js"></script>
+<script src="assets/javascript/game.js"></script>
+</body>
+</html>
