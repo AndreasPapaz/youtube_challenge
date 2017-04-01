@@ -163,7 +163,7 @@ function enterGame() {
                 status: 'waiting'
             });
             playerTree.onDisconnect().remove();
-
+            $("#login-switch").hide();
             $(".score, #player, .main").show();
             $("#video-placeholder").hide();
             $('.answer').css('visibility', 'hidden');
