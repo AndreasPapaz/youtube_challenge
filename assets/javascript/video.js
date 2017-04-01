@@ -8,7 +8,8 @@ var videoPlayer = {
 	key: 'AIzaSyApk9cJ6LxO_taHUxiG8kftlhs1ilr7LpQ',
 	playlistId: 'PL30BFB50685A0252B',
 	//List will be populated with YouTube video IDs on page load
-	videoList: []
+	videoList: [],
+	blockList: ['osfEQTR-45M', 'UPKb9z4l7eM', 'kTnM4jd-P1Y', 'FMghvnqDhT8', 'ctlEBHDROAw']
 }
 
 //Must be global scope for YouTube
@@ -74,7 +75,12 @@ function loadVideos(){
 				if(i === 50){
 					break;
 				}
-				videoPlayer.videoList.push(response.items[i].contentDetails.videoId);
+
+				var id = response.items[i].contentDetails.videoId
+
+				if(videoPlayer.blockList.indexOf(id) === -1){
+					videoPlayer.videoList.push(id);
+				}
 			}
 			shuffleVideos();
 		});
