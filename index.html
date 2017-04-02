@@ -10,13 +10,13 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
 	<script src='https://www.youtube.com/iframe_api'></script>
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/mathjs/3.10.1/math.min.js'></script>
 
 </head>
 <body>
-<!-- <script>
+<script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1159955214127114',
@@ -49,7 +49,7 @@
         })
     }
     };
-</script> -->
+</script>
 
 <div class="container-fluid">
 	<div id="myModal" class="modal">
@@ -81,16 +81,9 @@
 
 	<div class="top text-center">
 
-		<!-- <div id="login-switch">
+		<div id="login-switch">
 			<fb:login-button data-max-rows="1" data-size="xlarge" scope="public_profile,email" onlogin="fblogin();"></fb:login-button>
-        </div> -->
-
-        <!-- this is out old login switch -->
-        <div id="login-switch">
-			<input id="userName" placeholder="User Name"/>
-		</div>
-
-		<button id="start-button">Enter the arena</button>
+        </div>
 
 <!-- This is the page after player 1 clicks "enter the arena" -->
 
@@ -117,20 +110,20 @@
 			<div id="player"></div>
 		</div>
 
-		<div id="gameTimer"></div>
+		<div id="gameTimer">
+		</div>
 
 		<div class="row text-center">
 
-
 			<div class="player1 col-xs-4">
-				<div>
-					<img class="img-fluid img-circle" id="player1-image" src="assets/images/player1.png" alt="player one">
-				</div>
+				<p>
+					<img class="img-circle" id="player1-image" src="assets/images/player1.png" alt="player one">
+				</p>
 				<p>
 					<span id="player1-name"></span>
 				</p>
 				<div class="score">
-					<div class="col-md-12"> 
+					<div class="col-md-10"> 
 						<span id="player1-wins">Wins: </span>
 						<span id="player1-losses">Losses: </span>
 					</div>
@@ -149,14 +142,14 @@
 			</div>
 
 			<div class="player2 col-xs-4">
-				<div>
-					<img class="img-fluid img-circle" id="player2-image" src="assets/images/player2.png" alt="player two">
-				</div>
+				<p>
+					<img class="img-circle" id="player2-image" src="assets/images/player2.png" alt="player two">
+				</p>
 				<p>
 					<span id="player2-name"></span>
 				</p>
 				<div class="score">
-					<div class="col-md-12">
+					<div class="col-md-10">
 						<span id="player2-wins">Wins: </span>
 						<span id="player2-losses">Losses: </span>
 					</div>

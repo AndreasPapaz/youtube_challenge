@@ -149,8 +149,10 @@ function getVideoYear(vidId){
 	}).done(function(response){
 		year = response.items[0].snippet.publishedAt;
 		year = parseInt(year.substr(0, 4));
+	
 		gameData.correctAnswer = year;
 		generate_multipleChoices(year);
+
 		AddChoice_to_DOM();
 	});
 }

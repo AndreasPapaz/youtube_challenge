@@ -1,12 +1,12 @@
 //Configure Firebase connection
-var config = {
-    apiKey: "AIzaSyAznUZ10oaloQU9P2Jm1UwDOegZzwoIB-s",
-    authDomain: "test-1-df1ad.firebaseapp.com",
-    databaseURL: "https://test-1-df1ad.firebaseio.com",
-    projectId: "test-1-df1ad",
-    storageBucket: "test-1-df1ad.appspot.com",
-    messagingSenderId: "600600072308"
-};
+  var config = {
+    apiKey: "AIzaSyDyjAZ5RiWX0Pt5dkiMEJ_tXbY1Z7M63Uc",
+    authDomain: "musicchallenge-86176.firebaseapp.com",
+    databaseURL: "https://musicchallenge-86176.firebaseio.com",
+    projectId: "musicchallenge-86176",
+    storageBucket: "musicchallenge-86176.appspot.com",
+    messagingSenderId: "666483398318"
+  };
 
 firebase.initializeApp(config);
 var database = firebase.database();
@@ -49,34 +49,34 @@ var img_url;
 var modal = document.getElementById('myModal');
 
 // Action when player 1 clicks "enter the arena" OLD
-$("#start-button").click(function() {
-    if ($("#username").val() !== "") {
-        username = capitalize(($("#userName").val().trim()));
-        enterGame();
-        $("#login-switch").hide();
-        $("#start-button, #userName").hide();
-        $(".jumbotron, video").slideUp(1000);
+// $("#start-button").click(function() {
+//     if ($("#username").val() !== "") {
+//         username = capitalize(($("#userName").val().trim()));
+//         enterGame();
 
-        if(playerNum == 1){ 
-            $(".welcome").show();
-        }
-    }
-});
+//         $("#start-button, #userName").hide();
+//         $(".jumbotron, video").slideUp(1000);
+
+//         if(playerNum == 1){ 
+//             $(".welcome").show();
+//         }
+//     }
+// });
 
 // OLD
-$("#userName").keypress(function(e){
-    if(e.keyCode === 13 && $("#username").val()!==""){
-        username = capitalize($("#userName").val().trim());
-        enterGame();
-        $("#login-switch").hide();
-        $("#start-button, #userName").hide();
-        $(".jumbotron, video").slideUp(1000);
+// $("#userName").keypress(function(e){
+//     if(e.keyCode === 13 && $("#username").val()!==""){
+//         username = capitalize($("#userName").val().trim());
+//         enterGame();
+        
+//         $("#start-button, #userName").hide();
+//         $(".jumbotron, video").slideUp(1000);
 
-        if(playerNum === 1){ 
-            $(".welcome").show();
-        }
-    }
-});
+//         if(playerNum == 1){ 
+//             $(".welcome").show();
+//         }
+//     }
+// });
 
 function capitalize(name){
     return name.charAt(0).toUpperCase()+ name.slice(1);
@@ -119,8 +119,8 @@ function enterGame() {
         playerTree.set({
             name: username,
             wins: 0,
-            losses: 0
-            // img: img_url
+            losses: 0,
+            img: img_url
         });
 
         // Update chat on screen when new message detected - ordered by 'time' value
@@ -145,17 +145,16 @@ function enterGame() {
         // and id of '0' to denote system message
         playerTree.onDisconnect().remove();
 
-        // this doesnt work******************************
-        // chatData.onDisconnect().update({
-        //     name: username,
-        //     time: firebase.database.ServerValue.TIMESTAMP,
-        //     message: "has disconnected.",
-        //     idNum: 0
-        // });
+        chatDataDisc.onDisconnect().set({
+            name: username,
+            time: firebase.database.ServerValue.TIMESTAMP,
+            message: "has disconnected.",
+            idNum: 0
+        });
 
         
 
-    } else {
+        } else {
             //Add a waiting player to database
             playerNum = currentPlayers + 1;
             playerTree = database.ref("/players/" + playerNum);
@@ -242,24 +241,24 @@ playersTree.on("value", function(snapshot) {
 });
 
 // Get firebase ajax call, add the fetched imagin to DOM
-// function getfirebase_info(){
-//     $.ajax({
-//         url : "https://test-1-df1ad.firebaseio.com/.json",
-//         method : "GET"
-//     }).done(function(response){
-//         if (response.players.length === 2){
-//             $("#player1-image").attr("src",response.players[1].img);
-//             console.log("this is 1");
-//         }
-//         else if (response.players.length === 3){
-//             $("#player1-image").attr("src",response.players[1].img);
-//             $("#player2-image").attr("src",response.players[2].img);
-//             console.log("this is 2");
-//         }             
-//     })
-// }
+function getfirebase_info(){
+    $.ajax({
+        url : "https://musicchallenge-86176.firebaseio.com/.json",
+        method : "GET"
+    }).done(function(response){
+        if (response.players.length === 2){
+            $("#player1-image").attr("src",response.players[1].img);
+            console.log("this is 1");
+        }
+        else if (response.players.length === 3){
+            $("#player1-image").attr("src",response.players[1].img);
+            $("#player2-image").attr("src",response.players[2].img);
+            console.log("this is 2");
+        }             
+    })
+}
 
-// playersTree.on('child_added',getfirebase_info);
+playersTree.on('child_added',getfirebase_info);
 
 function searchForPlayer(slotNum){
     if(playerNum >= 3){
@@ -511,7 +510,7 @@ var generate_multipleChoices = function(correct_answer){
 
 var AddChoice_to_DOM =  function(){
     for(var i = 1; i <= 4; i++){
-        $("#answer" + i).text(multipleChoices[i-1]);
+        $("#answer" + i).html("<i class='fa fa-circle-o fa-1.5x' aria-hidden='true'></i>" + multipleChoices[i-1]);
     }
 }
 
